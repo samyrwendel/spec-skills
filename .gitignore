@@ -1,0 +1,9 @@
+# Artefatos do curso (não distribuir)
+/*.zip
+/*-skill-*.md
+
+# Node / OS
+node_modules/
+.DS_Store
+Thumbs.db
+.log/

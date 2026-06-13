@@ -1,0 +1,25 @@
+// Nota: `@app/shared` é o scope ilustrativo do projeto-exemplo.
+// No projeto alvo, derive o scope do package.json/namespace (ex.: `@<scope>/shared`).
+import { UseCase } from "@app/shared";
+import { User } from "../model";
+import { UserRepository } from "../provider";
+
+export interface FindUserByIdIn {
+  id: string;
+}
+
+export interface FindUserByIdOut {
+  user: User | null;
+}
+
+export class FindUserById implements UseCase<FindUserByIdIn, FindUserByIdOut> {
+  constructor(private readonly userRepository: UserRepository) {}
+
+  async execute(input: FindUserByIdIn): Promise<FindUserByIdOut> {
+    const user = await this.userRepository.findById(input.id);
+
+    return {
+      user,
+    };
+  }
+}
