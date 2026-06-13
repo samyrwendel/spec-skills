@@ -132,7 +132,7 @@ function printHelp() {
   console.log(`Prisma init
 
 Usage:
-  node .agents/skills/config-prisma/scripts/init-prisma-backend.js [options]
+  node .agents/skills/config-db/scripts/init-prisma-backend.js [options]
 
 Options:
   --apply                      Apply file changes (default is dry-run)
@@ -957,7 +957,7 @@ async function main() {
   const backendDir = path.join(rootDir, 'apps', 'backend');
   const logger = await createSkillRunLogger({
     rootDir,
-    skillName: 'config-prisma',
+    skillName: 'config-db',
     commandArgs: process.argv.slice(2),
   });
   const ops = createSkillRunOps({

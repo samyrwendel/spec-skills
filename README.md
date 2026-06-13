@@ -30,7 +30,7 @@ Ou simplesmente peça à sua IA: *"Clone https://github.com/samyrwendel/spec-ski
 
 | Camada | Skills |
 |---|---|
-| **config-\*** (fundação) | `config-project-fullstack`, `config-prisma`, `config-package-shared`, `config-new-module` |
+| **config-\*** (fundação) | `config-project-fullstack`, `config-db`, `config-package-shared`, `config-new-module` |
 | **module-\*** (domínio) | `module-aggregate`, `module-entity`, `module-repository`, `module-use-case`, `shared-validation-rule` |
 | **backend-\*** (persistência/HTTP) | `backend-nest-config`, `backend-nest-controller`, `backend-prisma-repository`, `backend-prisma-sync-module`, `backend-provider-implementation` |
 | **spec-\*** (orquestrador) | `spec-backend-auth-basic` |
@@ -45,7 +45,7 @@ Começando já no Supabase:
 ```
 Use as skills em .agents/skills para criar um projeto novo fullstack NESTA pasta, nesta ordem:
 1) config-project-fullstack — namespace @meu-app
-2) config-prisma com --db-provider supabase
+2) config-db com --db-provider supabase
 3) config-package-shared
 Depois vou colar as URLs reais do Supabase (DATABASE_URL + DIRECT_URL) no apps/backend/.env.
 ```
@@ -54,7 +54,7 @@ Prototipando local/grátis (migra pro Supabase depois trocando a URL):
 ```
 Use as skills em .agents/skills para criar um projeto novo fullstack NESTA pasta:
 1) config-project-fullstack — namespace @meu-app
-2) config-prisma com --db-provider local-postgres
+2) config-db com --db-provider local-postgres
 3) config-package-shared
 ```
 
@@ -68,7 +68,7 @@ Crie o módulo "transactions" com a skill config-new-module (namespace @meu-app)
 Monte a base de autenticação do backend com a skill spec-backend-auth-basic (namespace @meu-app).
 ```
 
-## Coringa de banco (`config-prisma --db-provider`)
+## Coringa de banco (`config-db --db-provider`)
 
 | Valor | Banco | Docker | `.env` |
 |---|---|---|---|

@@ -1,9 +1,11 @@
 ---
-name: config-prisma
-description: "Inicializar e padronizar a infraestrutura do Prisma no backend NestJS do projeto atual com schema modular por domínio (`apps/backend/prisma/models/*.model.prisma`), entrypoint de seed técnico em `apps/backend/prisma/seed/main.ts` (sem seeds de módulos), configuração de `prisma.config.ts`, suporte a múltiplos provedores de banco via `--db-provider` (Postgres local com Docker Compose, Supabase ou SQLite), e criação/ajuste de `DbModule` + `PrismaService` simples no padrão atual do projeto. Usar quando o pedido envolver setup inicial de Prisma, onboarding de módulos com arquivo Prisma próprio ou rebootstrap da infraestrutura de banco no backend."
+name: config-db
+description: "Configurar a camada de banco do backend NestJS do projeto atual (implementação atual: Prisma) com schema modular por domínio (`apps/backend/prisma/models/*.model.prisma`), entrypoint de seed técnico em `apps/backend/prisma/seed/main.ts` (sem seeds de módulos), configuração de `prisma.config.ts`, suporte a múltiplos provedores de banco via `--db-provider` (Postgres local com Docker Compose, Supabase ou SQLite), e criação/ajuste de `DbModule` + `PrismaService` simples no padrão atual do projeto. Usar quando o pedido envolver setup inicial do banco/Prisma, onboarding de módulos com arquivo Prisma próprio ou rebootstrap da infraestrutura de banco no backend."
 ---
 
-# Config Prisma
+# Config DB
+
+> Skill de **capacidade** ("configure a camada de banco"). Implementação atual: **Prisma**. Ponto de extensão para outras persistências (raw `pg`, `@supabase/supabase-js`, Drizzle) via futuras skills `backend-<persistência>-*` atrás da mesma interface `Repository` do `shared`. O *provedor* de banco (onde o Postgres roda) é ortogonal e já é coringa via `--db-provider`.
 
 ## Overview
 
@@ -24,12 +26,12 @@ Para `supabase`, o `.env` é semeado com placeholders (`[PROJECT_REF]`/`[PASSWOR
 
 1. Confirmar que o workspace contém `apps/backend/package.json`.
 2. Executar o script da skill (escolha o banco com `--db-provider`; default `local-postgres`):
-   - `node .agents/skills/config-prisma/scripts/init-prisma-backend.js --dry-run`
-   - `node .agents/skills/config-prisma/scripts/init-prisma-backend.js --apply --install`
+   - `node .agents/skills/config-db/scripts/init-prisma-backend.js --dry-run`
+   - `node .agents/skills/config-db/scripts/init-prisma-backend.js --apply --install`
    - Supabase: `... --apply --db-provider supabase` (depois cole as URLs reais no `apps/backend/.env`)
    - SQLite: `... --apply --db-provider sqlite`
 3. Incluir arquivos Prisma por módulo (repetível):
-   - `node .agents/skills/config-prisma/scripts/init-prisma-backend.js --apply --module auth --module product`
+   - `node .agents/skills/config-db/scripts/init-prisma-backend.js --apply --module auth --module product`
 4. Subir banco com Docker Compose do backend:
    - `npm --workspace apps/backend run db:start`
 5. Validar Prisma:

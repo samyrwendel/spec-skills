@@ -25,8 +25,8 @@ Padronizar bootstrap do Prisma no backend NestJS com:
 5. Gerar client Prisma.
 
 ```bash
-node .agents/skills/config-prisma/scripts/init-prisma-backend.js --dry-run
-node .agents/skills/config-prisma/scripts/init-prisma-backend.js --apply --install
+node .agents/skills/config-db/scripts/init-prisma-backend.js --dry-run
+node .agents/skills/config-db/scripts/init-prisma-backend.js --apply --install
 npm --workspace apps/backend run db:start
 npm --workspace apps/backend run prisma:generate
 ```
@@ -34,7 +34,7 @@ npm --workspace apps/backend run prisma:generate
 ## Escaffold de módulos Prisma
 
 ```bash
-node .agents/skills/config-prisma/scripts/init-prisma-backend.js --apply --module auth --module stock --module billing
+node .agents/skills/config-db/scripts/init-prisma-backend.js --apply --module auth --module stock --module billing
 ```
 
 ## Arquivos críticos
