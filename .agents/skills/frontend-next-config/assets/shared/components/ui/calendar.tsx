@@ -24,7 +24,7 @@ export function Calendar({
       classNames={{
         months: 'flex flex-col gap-4 sm:flex-row',
         month: 'space-y-4',
-        caption: 'relative flex items-center justify-center pt-1',
+        month_caption: 'relative flex items-center justify-center pt-1',
         caption_label: 'text-sm font-semibold',
         nav: 'flex items-center gap-1',
         button_previous:

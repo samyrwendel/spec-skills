@@ -77,7 +77,7 @@ export function DatePickerInput({
             onChange?.(format(date, 'yyyy-MM-dd'));
             setOpen(false);
           }}
-          initialFocus
+          autoFocus
         />
       </PopoverContent>
     </Popover>
