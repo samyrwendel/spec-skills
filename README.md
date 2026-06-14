@@ -26,13 +26,14 @@ git clone --depth 1 https://github.com/samyrwendel/spec-skills .spec-skills-tmp 
 
 Ou simplesmente peça à sua IA: *"Clone https://github.com/samyrwendel/spec-skills num temporário e copie a pasta `.agents` para a raiz deste projeto, sem sobrescrever nada existente."*
 
-## As 15 skills
+## As 16 skills
 
 | Camada | Skills |
 |---|---|
 | **config-\*** (fundação) | `config-project-fullstack`, `config-db`, `config-package-shared`, `config-new-module` |
 | **module-\*** (domínio) | `module-aggregate`, `module-entity`, `module-repository`, `module-use-case`, `shared-validation-rule` |
 | **backend-\*** (persistência/HTTP) | `backend-nest-config`, `backend-nest-controller`, `backend-prisma-repository`, `backend-prisma-sync-module`, `backend-provider-implementation` |
+| **frontend-\*** (UI) | `frontend-next-config` (estrutura `shared/` + rotas Next + design system + componentes) |
 | **spec-\*** (orquestrador) | `spec-backend-auth-basic` |
 
 ## Como começar um projeto novo
