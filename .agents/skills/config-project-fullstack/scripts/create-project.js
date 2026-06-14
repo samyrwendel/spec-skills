@@ -619,7 +619,10 @@ function walk(currentDir, visitor) {
 }
 
 function shouldSkipDirectory(name) {
-  return name === "node_modules" || name === ".git" || name === ".next" || name === "dist" || name === ".turbo";
+  // Pula node_modules, dist e QUALQUER pasta-ponto (.agents, .spec, .claude, .git, .next, .turbo...).
+  // Os pacotes reais do workspace vivem em apps/packages/modules — nunca em pasta-ponto —, então
+  // isso evita reescrever o namespace dentro de templates de skills (ex.: @temp/shared) ou specs.
+  return name === "node_modules" || name === "dist" || name.startsWith(".");
 }
 
 function computeScopedPackageName(packageJsonPath, currentName, rootDir, namespace) {
