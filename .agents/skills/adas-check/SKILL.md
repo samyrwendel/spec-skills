@@ -40,7 +40,8 @@ node .agents/skills/adas-check/scripts/check-design.js <dir-alvo> [--profile hol
 - Varre arquivos de UI (`.tsx/.ts/.jsx/.js/.css/...`), ignora `node_modules`/`dist`/pasta-ponto.
 - Reporta cada cor hex **fora do token set** do perfil, com contagem, `arquivo:linha` e o **token aprovado mais próximo** (distância RGB) como sugestão de fix. Severidade por frequência (major ≥20×, minor ≥5×, nit).
 - `--json` para consumo por outra ferramenta (ex.: o modo **align**).
-- Perfis em `scripts/check-design.js` (`PROFILES`). **Holdge** é o perfil inicial; cada projeto novo = um perfil com seus tokens. (Próximo passo: ler os tokens do CSS/tema do projeto em vez de hardcodar o perfil.)
+- **Config-driven (qualquer projeto):** os tokens (a "pista") são resolvidos nesta ordem — (1) `--config <profile.json>`; (2) `.adas/profile.json` auto-encontrado subindo do dir alvo; (3) `--profile <builtin>` (`holdge`, fallback). Cada projeto traz sua pista num `.adas/profile.json` (`{ "design": { "tokens": ["#hex", …] } }`).
+- **Bootstrap:** `node check-design.js <dir> --detect-tokens` varre as CSS vars do projeto e emite um `profile.json` pronto — útil em projetos com tema central (ex.: os que o `frontend-next-config` gera). Projetos sem tema central (hex espalhado, como o Holdge) usam `.adas/profile.json` ou o builtin.
 
 ## Faixa Idioma (implementada)
 

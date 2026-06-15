@@ -28,10 +28,11 @@ const SKIP_DIRS = new Set(['node_modules', 'dist', 'build', 'vendor', '.git', '.
 function fail(m) { console.error(`\n✖ ${m}`); process.exit(1); }
 
 function parseArgs(argv) {
-  const out = { dir: null, profile: 'holdge', maxDistance: 24, apply: false };
+  const out = { dir: null, profile: 'holdge', config: null, maxDistance: 24, apply: false };
   for (let i = 0; i < argv.length; i += 1) {
     const a = argv[i];
     if (a === '--profile') { out.profile = argv[++i]; continue; }
+    if (a === '--config') { out.config = argv[++i]; continue; }
     if (a === '--max-distance') { out.maxDistance = Number(argv[++i]); continue; }
     if (a === '--apply') { out.apply = true; continue; }
     if (a.startsWith('--')) fail(`Argumento desconhecido: ${a}`);
@@ -42,9 +43,12 @@ function parseArgs(argv) {
   return out;
 }
 
-function getDepartures(dir, profile) {
+function getDepartures(dir, profile, config) {
   const checker = path.join(__dirname, 'check-design.js');
-  const r = spawnSync(process.execPath, [checker, dir, '--profile', profile, '--json'], { encoding: 'utf8' });
+  const a = [checker, dir, '--json'];
+  if (config) a.push('--config', config);
+  a.push('--profile', profile);
+  const r = spawnSync(process.execPath, a, { encoding: 'utf8' });
   if (r.status !== 0) fail(`check-design falhou: ${(r.stderr || '').trim()}`);
   return JSON.parse(r.stdout).departures || [];
 }
@@ -73,7 +77,7 @@ function walkUi(dir, files) {
 function main() {
   const args = parseArgs(process.argv.slice(2));
   const root = path.resolve(args.dir);
-  const departures = getDepartures(root, args.profile);
+  const departures = getDepartures(root, args.profile, args.config);
 
   const confident = departures.filter((d) => d.distance <= args.maxDistance);
   const ambiguous = departures.filter((d) => d.distance > args.maxDistance);

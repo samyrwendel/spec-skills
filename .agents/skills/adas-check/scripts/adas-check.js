@@ -26,10 +26,11 @@ const LANES = {
 function fail(m) { console.error(`\n✖ ${m}`); process.exit(1); }
 
 function parseArgs(argv) {
-  const out = { dir: null, profile: 'holdge', lanes: Object.keys(LANES), json: false };
+  const out = { dir: null, profile: 'holdge', config: null, lanes: Object.keys(LANES), json: false };
   for (let i = 0; i < argv.length; i += 1) {
     const a = argv[i];
     if (a === '--profile') { out.profile = argv[++i]; continue; }
+    if (a === '--config') { out.config = argv[++i]; continue; }
     if (a === '--lanes') { out.lanes = String(argv[++i] || '').split(',').map((s) => s.trim()).filter(Boolean); continue; }
     if (a === '--json') { out.json = true; continue; }
     if (a.startsWith('--')) fail(`Argumento desconhecido: ${a}`);
@@ -40,10 +41,10 @@ function parseArgs(argv) {
   return out;
 }
 
-function runLane(name, dir, profile) {
+function runLane(name, dir, profile, config) {
   const script = path.join(__dirname, LANES[name].script);
   const args = [script, dir, '--json'];
-  if (name === 'design') args.push('--profile', profile);
+  if (name === 'design') { if (config) args.push('--config', config); args.push('--profile', profile); }
   const r = spawnSync(process.execPath, args, { encoding: 'utf8' });
   if (r.status !== 0) return { error: (r.stderr || `exit ${r.status}`).trim() };
   try { return JSON.parse(r.stdout); } catch (e) { return { error: `JSON inválido: ${e.message}` }; }
@@ -82,7 +83,7 @@ function main() {
   if (!fs.existsSync(root)) fail(`Diretório não existe: ${root}`);
 
   const results = {};
-  for (const lane of args.lanes) results[lane] = runLane(lane, root, args.profile);
+  for (const lane of args.lanes) results[lane] = runLane(lane, root, args.profile, args.config);
   const summaries = {};
   for (const lane of args.lanes) summaries[lane] = summarize(lane, results[lane]);
 
