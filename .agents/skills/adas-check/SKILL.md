@@ -50,11 +50,21 @@ node .agents/skills/adas-check/scripts/check-i18n.js <dir-ui> [--locales <dir>] 
 
 Três sensores: **(A)** paridade de chaves entre locales (detecta auto o `i18n/locales/<locale>/*.json`, achata chaves nested, diff por namespace) — alta confiança; **(B)** atributos hardcoded (`placeholder`/`aria-label`/`title`/`alt`/`label` com texto literal) — alta confiança; **(C)** texto JSX literal fora de `{t(...)}` — heurística, marcado "revisar". `--json` pro modo align.
 
+## Align — faixa Design, fase 1 (consistência de cor)
+
+```bash
+node .agents/skills/adas-check/scripts/align-design.js <dir-ui> [--profile holdge] [--max-distance 24] [--apply]
+```
+
+Traz a faixa Design pra pista **sem brigar com o volante**: troca cada cor rogue pelo token aprovado **só onde o token é inequívoco** (distância RGB ≤ `--max-distance`, default 24). Rogues ambíguos (Δ grande — podem ser cor de marca estranha) **nunca** são trocados: ficam listados pra decisão humana. **Dry-run por padrão**; `--apply` escreve. Casa hex de 6 e 3 dígitos (`#222`/`#222222`), preserva hex de 8 dígitos (alpha). Depois do `--apply`, rode o `check-design` pra confirmar a queda.
+
+> Loop provado no holdge-swap: 26 → 13 cores (202 ocorrências corrigidas; as 13 ambíguas retidas). **Fase 2** (tokenizar: criar CSS vars e referenciar `var(--token)`) é um passo à parte. Align de i18n (extrair literais pra `t()`) ainda não implementado.
+
 ## Os 3 modos do ADAS (contexto)
 
 - **install** — projeto novo nasce na pista (skills `config-*`/`module-*`/`backend-*` do spec-skills).
 - **compare** — ESTA skill: detecta saída de faixa em qualquer projeto (novo ou legado).
-- **align** — traz o projeto pra pista (consome o relatório JSON desta skill; auto-fix dos desvios mecânicos + flag dos de julgamento). ⏳ planejado.
+- **align** — traz o projeto pra pista (auto-fix dos desvios mecânicos + flag dos de julgamento). 🟢 começou: `scripts/align-design.js` (faixa Design, fase 1 — consistência de cor).
 
 ## Cross-platform
 
