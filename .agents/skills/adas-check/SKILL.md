@@ -21,6 +21,16 @@ O ADAS (Advanced Driver-Assistance System) mantém a LLM **na pista** das especi
 
 As regras determinísticas pegam ~80% barato e sem drift; a passada com LLM pega o nuance. A mesma fonte da verdade (as skills/lanes) gera o doc portátil **e** o checador.
 
+## Uso — runner unificado (recomendado)
+
+Um comando roda todas as faixas implementadas e emite **um painel de saída de faixa**:
+
+```bash
+node .agents/skills/adas-check/scripts/adas-check.js <dir-ui> [--profile holdge] [--lanes design,i18n] [--json]
+```
+
+Orquestra os checadores por faixa via `--json` (usa `process.execPath` — cross-platform, sem shell). Saída = resumo por faixa (desvios por severidade major/minor/nit + top exemplos) + total. `--json` para CI / modo align. Para o detalhe completo de uma faixa, rode o checador dela direto (abaixo).
+
 ## Faixa Design (implementada)
 
 ```bash
