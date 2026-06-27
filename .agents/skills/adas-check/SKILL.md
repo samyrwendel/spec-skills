@@ -17,9 +17,11 @@ O ADAS (Advanced Driver-Assistance System) mantém a LLM **na pista** das especi
 | **Idioma** | paridade de chaves entre locales; `aria-label`/placeholder/title/alt hardcoded; texto JSX literal | mistura de idiomas na mesma tela | ✅ `scripts/check-i18n.js` |
 | **App** | `fetch(` solto vs `useApiClient`; endpoint sem auth/validação; god-file crescendo | componente canônico recriado | ⏳ planejado |
 | **Produto** | dado mockado/hardcoded; fee sem % + USD | feature fora dos pilares/escopo | ⏳ planejado |
-| **Decisões** | mudança em área decidida sem DA-NNN novo | contradiz uma DA aceita | ⏳ planejado |
+| **Decisões** | DA-NNN órfã/duplicada; placeholder não preenchido; âncora ausente (`adas-self.js`) | contradiz uma DA aceita; mudança em área decidida sem DA nova | ✅ skill `decisions` + `scripts/adas-self.js` |
 
 As regras determinísticas pegam ~80% barato e sem drift; a passada com LLM pega o nuance. A mesma fonte da verdade (as skills/lanes) gera o doc portátil **e** o checador.
+
+> **Auto-auditoria (governança):** `node .agents/skills/adas-check/scripts/adas-self.js` audita o próprio ADAS — `.specs/` + `DECISIONS.md` (índice × seções) + âncora `AGENTS.md` + frontmatter das skills + DA órfã. Irmão deste runner (que audita o **código**); o `adas-self` audita a **governança**. Lane "Decisões" governada pela skill `decisions` (DA-NNN no `DECISIONS.md`).
 
 ## Uso — runner unificado (recomendado)
 
